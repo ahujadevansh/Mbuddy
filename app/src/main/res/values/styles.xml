@@ -8,7 +8,7 @@
     </style>
 
     <style name="register_input">
-        <item name="android:background">@android:color/white</item>
+        <item name="android:background">@drawable/rounded_edit_text_register</item>
         <item name="android:ems">10</item>
         <item name="android:paddingLeft">20dp</item>
     </style>
