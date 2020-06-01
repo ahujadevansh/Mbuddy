@@ -84,10 +84,22 @@
             android:layout_height="200dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/circular_button"
-            android:text="select"
+            android:text=" Select Photo"
             app:layout_constraintEnd_toEndOf="@+id/username_editText_register"
             app:layout_constraintStart_toStartOf="@+id/username_editText_register"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/select_photo_imageview"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            app:civ_border_width="4dp"
+            app:layout_constraintBottom_toBottomOf="@+id/select_photo_button"
+            app:layout_constraintEnd_toEndOf="@+id/select_photo_button"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/select_photo_button"
+            app:layout_constraintTop_toTopOf="@+id/select_photo_button"
+            app:layout_constraintVertical_bias="1.0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

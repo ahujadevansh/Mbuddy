@@ -1,7 +1,6 @@
 package com.ahujadevansh.mbuddy
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -37,8 +36,8 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this, "hello ${it.result?.user?.email}", Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener {
-                Log.d("MAIN", "something went wrong")
-                Toast.makeText(
+
+            Toast.makeText(
                     this,
                     "Please make sure your email and password is correct",
                     Toast.LENGTH_SHORT
