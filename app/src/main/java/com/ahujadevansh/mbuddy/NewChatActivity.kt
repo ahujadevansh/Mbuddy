@@ -1,5 +1,6 @@
 package com.ahujadevansh.mbuddy
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -45,6 +46,13 @@ class NewChatActivity : AppCompatActivity() {
                         adapter.add(UserItem(user))
                     }
                 }
+
+                adapter.setOnItemClickListener { item, view ->
+                    val intent = Intent(view.context, MessagesActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+
                 binding.recyclerviewNewchat.adapter = adapter
             }
 
