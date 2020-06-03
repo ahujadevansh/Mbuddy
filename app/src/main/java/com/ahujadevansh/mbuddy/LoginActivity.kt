@@ -1,5 +1,6 @@
 package com.ahujadevansh.mbuddy
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -34,6 +35,10 @@ class LoginActivity : AppCompatActivity() {
             .addOnCompleteListener {
                 if (!it.isComplete) return@addOnCompleteListener
                 Toast.makeText(this, "hello ${it.result?.user?.email}", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, MessagesActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
+
             }
             .addOnFailureListener {
 

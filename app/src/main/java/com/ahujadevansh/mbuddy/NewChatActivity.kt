@@ -34,6 +34,10 @@ class NewChatActivity : AppCompatActivity() {
 
     }
 
+    companion object {
+        val USER_KEY = "USER_KEY"
+    }
+
     private fun fetchUsers() {
         val ref = FirebaseDatabase.getInstance().getReference("/users")
         ref.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -47,8 +51,12 @@ class NewChatActivity : AppCompatActivity() {
                     }
                 }
 
+
+
                 adapter.setOnItemClickListener { item, view ->
-                    val intent = Intent(view.context, MessagesActivity::class.java)
+                    val intent = Intent(view.context, ChatLogActivity::class.java)
+                    val userItem = item as UserItem
+                    intent.putExtra(USER_KEY, userItem.user)
                     startActivity(intent)
                     finish()
                 }

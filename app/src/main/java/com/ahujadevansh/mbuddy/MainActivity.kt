@@ -24,6 +24,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
+
+        checkLogin()
         binding.signUpButtonRegister.setOnClickListener {
 
             registerUser()
@@ -40,6 +42,17 @@ class MainActivity : AppCompatActivity() {
         binding.selectPhotoButton.setOnClickListener {
             selectPhoto()
         }
+    }
+
+    private fun checkLogin() {
+
+        val uid = FirebaseAuth.getInstance().uid
+        if (uid != null) {
+            val intent = Intent(this, MessagesActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+        }
+
     }
 
     private fun selectPhoto() {
