@@ -52,10 +52,12 @@ class ChatLogActivity : AppCompatActivity() {
                 val chatMessage = p0.getValue(ChatMessage::class.java)
                 if(chatMessage != null) {
                     if (chatMessage.fromId == FirebaseAuth.getInstance().uid) {
-                        adapter.add(ChatFromItem(chatMessage.text))
+                        val currentUser = MessagesActivity.currentUser ?: return
+                        adapter.add(ChatFromItem(chatMessage.text, currentUser))
                     }
                     else {
-                        adapter.add(ChatToItem(chatMessage.text))
+                        val toUser = intent.getParcelableExtra<User>(NewChatActivity.USER_KEY) ?: return
+                        adapter.add(ChatToItem(chatMessage.text, toUser))
                     }
                 }
             }
@@ -92,16 +94,21 @@ class ChatLogActivity : AppCompatActivity() {
         reference.setValue(chatMessage)
             .addOnSuccessListener {
                 Log.d("CHATLOG", "Saved")
+                binding.messageEditTextChatLog.text.clear()
             }
 
 
     }
 }
 
-class ChatFromItem(val text:String) : Item<GroupieViewHolder>() {
+class ChatFromItem(val text:String, val user: User) : Item<GroupieViewHolder>() {
 
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
         viewHolder.itemView.textView_from_row.text = text
+
+        val uri = user.profileImageUrl
+        val targetImageView = viewHolder.itemView.imageView_from_row
+        Picasso.get().load(uri).into(targetImageView)
     }
 
     override fun getLayout(): Int {
@@ -110,10 +117,14 @@ class ChatFromItem(val text:String) : Item<GroupieViewHolder>() {
 }
 
 
-class ChatToItem(val text:String) : Item<GroupieViewHolder>() {
+class ChatToItem(val text:String,  val user: User) : Item<GroupieViewHolder>() {
 
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
         viewHolder.itemView.textView_to_row.text = text
+
+        val uri = user.profileImageUrl
+        val targetImageView = viewHolder.itemView.imageView_to_row
+        Picasso.get().load(uri).into(targetImageView)
     }
 
     override fun getLayout(): Int {

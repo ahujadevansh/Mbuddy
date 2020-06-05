@@ -8,8 +8,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.ahujadevansh.mbuddy.databinding.ActivityMessagesBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class MessagesActivity : AppCompatActivity() {
+
+    companion object {
+        var currentUser:User? = null
+    }
 
     private lateinit var binding: ActivityMessagesBinding
 
@@ -17,6 +25,7 @@ class MessagesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_messages)
         loginRequired()
+        fetchCurrectUser()
     }
 
     private fun loginRequired() {
@@ -27,6 +36,20 @@ class MessagesActivity : AppCompatActivity() {
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
         }
+    }
+
+    private fun fetchCurrectUser() {
+        val uid = FirebaseAuth.getInstance().uid
+        val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
+        ref.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(p0: DataSnapshot) {
+                currentUser = p0.getValue(User::class.java)
+            }
+
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
 
     }
 
